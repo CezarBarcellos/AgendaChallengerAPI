@@ -4,11 +4,11 @@ using MediatR;
 
 namespace AgendaChallenger.Domain.Handlers
 {
-    public class GetCompromissoHandler : IRequestHandler<CreateCompromissoRequest, CreateCompromissoResponse>
+    public class GetCompromissoHandler : IRequestHandler<GetCompromissoRequest, GetCompromissoResponse>
     {
-        public Task<CreateCompromissoResponse> Handle(CreateCompromissoRequest request, CancellationToken cancellationToken)
+        public Task<GetCompromissoResponse> Handle(GetCompromissoRequest request, CancellationToken cancellationToken)
         {
-            var result = new CreateCompromissoResponse
+            var result = new GetCompromissoResponse
             {
                 Id = new Guid(),
                 Titulo = request.Titulo,

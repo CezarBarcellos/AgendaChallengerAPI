@@ -12,14 +12,14 @@ namespace AgendaChallenger.Controllers
     {
         [HttpGet]
         [Route("Obter")]
-        public Task<CreateCompromissoResponse> Get([FromServices] IMediator mediator, [FromBody] GetCompromissoRequest command)
+        public Task<GetCompromissoResponse> Get([FromServices] IMediator mediator, [FromBody] GetCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpGet]
         [Route("ObterTodos")]
-        public Task<CreateCompromissoResponse> GetAll([FromServices] IMediator mediator, [FromBody] CreateCompromissoRequest command)
+        public Task<GetAllCompromissoResponse> GetAll([FromServices] IMediator mediator, [FromBody] GetAllCompromissoRequest command)
         {
             return mediator.Send(command);
         }
@@ -33,14 +33,14 @@ namespace AgendaChallenger.Controllers
 
         [HttpPost]
         [Route("Atualizar")]
-        public Task<CreateCompromissoResponse> Update([FromServices] IMediator mediator, [FromBody] UpdateCompromissoRequest command)
+        public Task<UpdateCompromissoResponse> Update([FromServices] IMediator mediator, [FromBody] UpdateCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpDelete]
         [Route("Remover")]
-        public Task<CreateCompromissoResponse> Delete([FromServices] IMediator mediator, [FromBody] DeleteCompromissoRequest command)
+        public Task<DeleteCompromissoResponse> Delete([FromServices] IMediator mediator, [FromBody] DeleteCompromissoRequest command)
         {
             return mediator.Send(command);
         }
