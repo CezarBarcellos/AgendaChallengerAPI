@@ -1,4 +1,4 @@
-﻿namespace AgendaChallenger.Domain.Commands.Responses
+﻿namespace AgendaChallenger.Domain.Commands.Responses.Compromisso
 {
     public class CreateCompromissoResponse
     {

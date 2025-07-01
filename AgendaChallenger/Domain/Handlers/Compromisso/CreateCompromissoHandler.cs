@@ -1,8 +1,8 @@
-﻿using AgendaChallenger.Domain.Commands.Requests;
-using AgendaChallenger.Domain.Commands.Responses;
+﻿using AgendaChallenger.Domain.Commands.Requests.Compromisso;
+using AgendaChallenger.Domain.Commands.Responses.Compromisso;
 using MediatR;
 
-namespace AgendaChallenger.Domain.Handlers
+namespace AgendaChallenger.Domain.Handlers.Compromisso
 {
     public class CreateCompromissoHandler : IRequestHandler<CreateCompromissoRequest, CreateCompromissoResponse>
     {

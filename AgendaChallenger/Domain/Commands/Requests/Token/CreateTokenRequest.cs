@@ -1,9 +1,9 @@
-﻿using AgendaChallenger.Domain.Commands.Responses;
+﻿using AgendaChallenger.Domain.Commands.Responses.Token;
 using MediatR;
 
-namespace AgendaChallenger.Domain.Commands.Requests
+namespace AgendaChallenger.Domain.Commands.Requests.Token
 {
-    public class DeleteCompromissoRequest : IRequest<DeleteCompromissoResponse>
+    public class CreateTokenRequest : IRequest<CreateTokenResponse>
     {
         public string Titulo { get; set; }
         public string Descricao { get; set; }

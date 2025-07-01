@@ -1,45 +1,47 @@
-﻿using AgendaChallenger.Domain.Commands.Requests;
-using AgendaChallenger.Domain.Commands.Responses;
+﻿using AgendaChallenger.Domain.Commands.Requests.Compromisso;
+using AgendaChallenger.Domain.Commands.Responses.Compromisso;
 using AgendaChallenger.Domain.Handlers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaChallenger.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("")]
     public class CompromissoController : Controller
     {
         [HttpGet]
-        [Route("Obter")]
+        [Route("ObterCompromisso")]
         public Task<GetCompromissoResponse> Get([FromServices] IMediator mediator, [FromBody] GetCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpGet]
-        [Route("ObterTodos")]
+        [Route("ObterTodosCompromissos")]
         public Task<GetAllCompromissoResponse> GetAll([FromServices] IMediator mediator, [FromBody] GetAllCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpPost]
-        [Route("Criar")]
+        [Route("CriarCompromisso")]
         public Task<CreateCompromissoResponse> Create([FromServices]IMediator mediator, [FromBody]CreateCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpPost]
-        [Route("Atualizar")]
+        [Route("AtualizarCompromisso")]
         public Task<UpdateCompromissoResponse> Update([FromServices] IMediator mediator, [FromBody] UpdateCompromissoRequest command)
         {
             return mediator.Send(command);
         }
 
         [HttpDelete]
-        [Route("Remover")]
+        [Route("RemoverCompromisso")]
         public Task<DeleteCompromissoResponse> Delete([FromServices] IMediator mediator, [FromBody] DeleteCompromissoRequest command)
         {
             return mediator.Send(command);

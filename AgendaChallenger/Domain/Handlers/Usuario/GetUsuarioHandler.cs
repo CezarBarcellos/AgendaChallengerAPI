@@ -1,14 +1,14 @@
-﻿using AgendaChallenger.Domain.Commands.Requests;
-using AgendaChallenger.Domain.Commands.Responses;
+﻿using AgendaChallenger.Domain.Commands.Requests.Usuario;
+using AgendaChallenger.Domain.Commands.Responses.Usuario;
 using MediatR;
 
 namespace AgendaChallenger.Domain.Handlers
 {
-    public class GetCompromissoHandler : IRequestHandler<GetCompromissoRequest, GetCompromissoResponse>
+    public class GetUsuarioHandler : IRequestHandler<GetUsuarioRequest, GetUsuarioResponse>
     {
-        public Task<GetCompromissoResponse> Handle(GetCompromissoRequest request, CancellationToken cancellationToken)
+        public Task<GetUsuarioResponse> Handle(GetUsuarioRequest request, CancellationToken cancellationToken)
         {
-            var result = new GetCompromissoResponse
+            var result = new GetUsuarioResponse
             {
                 Id = new Guid(),
                 Titulo = request.Titulo,

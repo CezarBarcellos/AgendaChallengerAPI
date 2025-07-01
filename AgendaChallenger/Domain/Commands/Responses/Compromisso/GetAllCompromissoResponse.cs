@@ -1,6 +1,6 @@
-﻿namespace AgendaChallenger.Domain.Commands.Responses
+﻿namespace AgendaChallenger.Domain.Commands.Responses.Compromisso
 {
-    public class GetCompromissoResponse
+    public class GetAllCompromissoResponse
     {
         public Guid Id { get; set; }
         public string Titulo { get; set; }

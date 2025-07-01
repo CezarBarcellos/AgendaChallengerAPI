@@ -1,9 +1,9 @@
-﻿using AgendaChallenger.Domain.Commands.Responses;
+﻿using AgendaChallenger.Domain.Commands.Responses.Usuario;
 using MediatR;
 
-namespace AgendaChallenger.Domain.Commands.Requests
+namespace AgendaChallenger.Domain.Commands.Requests.Usuario
 {
-    public class GetAllCompromissoRequest : IRequest<GetAllCompromissoResponse>
+    public class DeleteUsuarioRequest : IRequest<DeleteUsuarioResponse>
     {
         public string Titulo { get; set; }
         public string Descricao { get; set; }
