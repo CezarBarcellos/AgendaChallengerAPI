@@ -10,7 +10,7 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
         {
             var result = new CreateCompromissoResponse
             {
-                Id = new Guid(),
+                Id = 1,
                 Titulo = request.Titulo,
                 DataInicio = request.DataInicio,
                 DataFim = request.DataFim,

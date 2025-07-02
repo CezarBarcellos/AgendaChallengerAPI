@@ -1,13 +1,9 @@
 ﻿namespace AgendaChallenger.Domain.Commands.Responses.Usuario
 {
-    public class GetAllUsuarioResponse
+    public record GetAllUsuarioResponse
     {
-        public Guid Id { get; set; }
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
-        //public Status Status { get; set; }
-        public DateTime DataCriacao { get; set; }
+        int Id { get; set; }
+        string? Nome { get; set; }
+        string? Email { get; set; }
     }
 }

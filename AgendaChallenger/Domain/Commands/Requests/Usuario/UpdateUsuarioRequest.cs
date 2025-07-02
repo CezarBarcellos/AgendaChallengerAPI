@@ -5,11 +5,7 @@ namespace AgendaChallenger.Domain.Commands.Requests.Usuario
 {
     public class UpdateUsuarioRequest : IRequest<UpdateUsuarioResponse>
     {
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
-        public string Localizacao { get; set; }
-        //public Status Status { get; set; }
+        public required string Id { get; set; }
+        public required string Nome { get; set; }
     }
 }

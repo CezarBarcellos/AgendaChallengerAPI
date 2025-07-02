@@ -10,11 +10,7 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
         {
             var result = new DeleteCompromissoResponse
             {
-                Id = new Guid(),
-                Titulo = request.Titulo,
-                DataInicio = request.DataInicio,
-                DataFim = request.DataFim,
-                DataCriacao = DateTime.Now
+                Success = true
             };
 
             return Task.FromResult(result);

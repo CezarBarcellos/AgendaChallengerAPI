@@ -1,13 +1,15 @@
-﻿namespace AgendaChallenger.Domain.Commands.Responses.Compromisso
+﻿using AgendaChallenger.Entities;
+
+namespace AgendaChallenger.Domain.Commands.Responses.Compromisso
 {
-    public class GetAllCompromissoResponse
+    public record GetAllCompromissoResponse
     {
-        public Guid Id { get; set; }
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
-        //public Status Status { get; set; }
-        public DateTime DataCriacao { get; set; }
+        Guid Id { get; set; }
+        string? Titulo { get; set; }
+        string? Descricao { get; set; }
+        DateTime DataInicio { get; set; }
+        DateTime DataFim { get; set; }
+        Status Status { get; set; }
+        DateTime DataCriacao { get; set; }
     }
 }

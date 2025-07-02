@@ -2,6 +2,7 @@
 {
     public class Compromissos
     {
+        public required int Id { get; set; }
         public required string Titulo { get; set; }
         public required string Descricao { get; set; }
         public required DateTime DataInicio { get; set; }
@@ -12,8 +13,8 @@
 
     public enum Status
     {
-        Confirmado,
-        Pendente,
-        Cancelado
+        Confirmado = 1,
+        Pendente = 2,
+        Cancelado = 3
     }
 }

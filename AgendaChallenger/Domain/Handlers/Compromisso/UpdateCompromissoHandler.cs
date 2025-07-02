@@ -8,14 +8,7 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
     {
         public Task<UpdateCompromissoResponse> Handle(UpdateCompromissoRequest request, CancellationToken cancellationToken)
         {
-            var result = new UpdateCompromissoResponse
-            {
-                Id = new Guid(),
-                Titulo = request.Titulo,
-                DataInicio = request.DataInicio,
-                DataFim = request.DataFim,
-                DataCriacao = DateTime.Now
-            };
+            var result = new UpdateCompromissoResponse();
 
             return Task.FromResult(result);
         }
