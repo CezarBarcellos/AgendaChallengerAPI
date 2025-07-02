@@ -6,19 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaChallenger.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("")]
     public class UsuarioController : Controller
     {
         [HttpGet]
         [Route("ObterUsuario")]
-        public Task<GetUsuarioResponse> Get([FromServices] IMediator mediator, [FromBody] GetUsuarioRequest command)
+        public Task<GetUsuarioResponse> Get([FromServices] IMediator mediator, int id)
         {
+            var command = new GetUsuarioRequest { Id = id };
             return mediator.Send(command);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ObterTodosUsuarios")]
         public Task<GetAllUsuarioResponse> GetAll([FromServices] IMediator mediator, [FromBody] GetAllUsuarioRequest command)
         {
@@ -41,8 +42,9 @@ namespace AgendaChallenger.Controllers
 
         [HttpDelete]
         [Route("RemoverUsuario")]
-        public Task<DeleteUsuarioResponse> Delete([FromServices] IMediator mediator, [FromBody] DeleteUsuarioRequest command)
+        public Task<DeleteUsuarioResponse> Delete([FromServices] IMediator mediator, int id)
         {
+            var command = new DeleteUsuarioRequest { Id = id };
             return mediator.Send(command);
         }
     }

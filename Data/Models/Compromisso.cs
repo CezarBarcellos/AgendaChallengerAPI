@@ -1,5 +1,6 @@
 ﻿using Data.Abstractions;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Data.Models
 {
@@ -11,13 +12,17 @@ namespace Data.Models
         public required DateTime DataInicio { get; set; }
         public required DateTime DataFim { get; set; }
         public string? Localizacao { get; set; }
-        public required Status Status { get; set; }
-    }
+        public required int Status { get; set; }
 
-    public enum Status
-    {
-        Confirmado = 1,
-        Pendente = 2,
-        Cancelado = 3
-    }
+        [SetsRequiredMembers]
+        public Compromisso(string titulo, string descricao, DateTime dataInicio, DateTime dataFim, string localizacao, int status)
+        {
+            Titulo = titulo;
+            Descricao = descricao;
+            DataInicio = dataInicio;
+            DataFim = dataFim;
+            Localizacao = localizacao;
+            Status = status;
+        }
+    }  
 }

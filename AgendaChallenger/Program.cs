@@ -1,4 +1,6 @@
 using AgendaChallenger.Domain.Handlers;
+using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -6,12 +8,27 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using Data;
+using Microsoft.EntityFrameworkCore;
+using AgendaChallenger.Authorization;
+using AgendaChallenger.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// Repositórios
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ICompromissoRepository, CompromissoRepository>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

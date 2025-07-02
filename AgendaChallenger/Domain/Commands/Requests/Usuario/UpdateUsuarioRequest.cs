@@ -5,7 +5,10 @@ namespace AgendaChallenger.Domain.Commands.Requests.Usuario
 {
     public class UpdateUsuarioRequest : IRequest<UpdateUsuarioResponse>
     {
-        public required string Id { get; set; }
-        public required string Nome { get; set; }
+        public required int Id { get; set; }
+        public string? Nome { get; set; }
+        public string? Email { get; set; }
+        public string? Senha { get; set; }
+        public bool Ativo { get; set; }
     }
 }

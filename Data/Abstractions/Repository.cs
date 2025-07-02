@@ -19,22 +19,28 @@ namespace Data.Abstractions
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public virtual void Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
             ArgumentNullException.ThrowIfNull(entity);
             DbContext.Add(entity);
+            await DbContext.SaveChangesAsync();
+            return entity;
         }
 
-        public virtual void Update(T entity)
+        public virtual async Task<T> Update(T entity)
         {
             ArgumentNullException.ThrowIfNull(entity);
             DbContext.Update(entity);
+            await DbContext.SaveChangesAsync();
+            return entity;
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task<int> Delete(T entity)
         {
             ArgumentNullException.ThrowIfNull(entity);
             DbContext.Remove(entity);
+            int result = await DbContext.SaveChangesAsync();
+            return result;
         }
     }
 }

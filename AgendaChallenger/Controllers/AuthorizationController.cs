@@ -9,7 +9,7 @@ namespace AgendaChallenger.Controllers
         [Route("")]
         public class AuthorizationController : Controller
         {
-            [HttpGet]
+            [HttpPost]
             [Route("Login")]
             public Task<CreateTokenResponse> GetToken([FromServices] IMediator mediator, [FromBody] CreateTokenRequest command)
             {

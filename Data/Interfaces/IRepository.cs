@@ -1,14 +1,13 @@
 ﻿using Data.Abstractions;
-using System.Linq.Expressions;
 
 namespace Data.Interfaces
 {
     public interface IRepository<T> where T : Entity
     {
-        void Add(T entity);
+        Task<T> Add(T entity);
 
-        void Update(T entity);
+        Task<T> Update(T entity);
 
-        void Delete(T entity);
+        Task<int> Delete(T entity);
     }
 }

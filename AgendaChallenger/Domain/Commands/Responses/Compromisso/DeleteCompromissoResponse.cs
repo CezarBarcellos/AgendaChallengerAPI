@@ -2,6 +2,6 @@
 {
     public class DeleteCompromissoResponse
     {
-        public bool Success { get; set; }
+        public string? mensagem { get; set; }
     }
 }

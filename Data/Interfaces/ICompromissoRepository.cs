@@ -4,10 +4,13 @@ namespace Data.Interfaces
 {
     public interface ICompromissoRepository
     {
-        void Add(Compromisso compromisso);
+        Task<Compromisso> Add(Compromisso compromisso);
 
-        void Update(Compromisso compromisso);
+        Task<Compromisso> Update(Compromisso compromisso);
 
-        void Delete(Compromisso compromisso);
+        Task<int> Delete(Compromisso compromisso);
+
+        Task<List<Compromisso>> GetAll(CancellationToken cancellationToken = default);
+        Task<Compromisso?> Get(int id, CancellationToken cancellationToken = default);
     }
 }

@@ -5,10 +5,14 @@ namespace Data.Interfaces
 {
     public interface IUsuarioRepository
     {
-        void Add(Usuario compromisso);
+        Task<Usuario> Add(Usuario usuario);
 
-        void Update(Usuario compromisso);
+        Task<Usuario> Update(Usuario usuario);
 
-        void Delete(Usuario compromisso);
+        Task<int> Delete(Usuario usuario);
+
+        Task<List<Usuario>> GetAll(CancellationToken cancellationToken = default);
+        Task<Usuario?> Get(int id, CancellationToken cancellationToken = default);
+        Task<Usuario?> GetByToken(string nome, string senha, CancellationToken cancellationToken = default);
     }
 }

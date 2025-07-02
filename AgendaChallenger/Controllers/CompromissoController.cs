@@ -1,4 +1,5 @@
 ﻿using AgendaChallenger.Domain.Commands.Requests.Compromisso;
+using AgendaChallenger.Domain.Commands.Requests.Usuario;
 using AgendaChallenger.Domain.Commands.Responses.Compromisso;
 using AgendaChallenger.Domain.Handlers;
 using MediatR;
@@ -14,8 +15,9 @@ namespace AgendaChallenger.Controllers
     {
         [HttpGet]
         [Route("ObterCompromisso")]
-        public Task<GetCompromissoResponse> Get([FromServices] IMediator mediator, [FromBody] GetCompromissoRequest command)
+        public Task<GetCompromissoResponse> Get([FromServices] IMediator mediator, int id)
         {
+            var command = new GetCompromissoRequest { Id = id };
             return mediator.Send(command);
         }
 
@@ -42,8 +44,9 @@ namespace AgendaChallenger.Controllers
 
         [HttpDelete]
         [Route("RemoverCompromisso")]
-        public Task<DeleteCompromissoResponse> Delete([FromServices] IMediator mediator, [FromBody] DeleteCompromissoRequest command)
+        public Task<DeleteCompromissoResponse> Delete([FromServices] IMediator mediator, int id)
         {
+            var command = new DeleteCompromissoRequest { Id = id };
             return mediator.Send(command);
         }
     }

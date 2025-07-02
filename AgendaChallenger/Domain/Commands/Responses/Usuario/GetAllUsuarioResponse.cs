@@ -2,8 +2,6 @@
 {
     public record GetAllUsuarioResponse
     {
-        int Id { get; set; }
-        string? Nome { get; set; }
-        string? Email { get; set; }
+        public IEnumerable<Data.Models.Usuario>? lstUsuarios { get; set; }
     }
 }

@@ -13,9 +13,19 @@ namespace Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Usuario>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<List<Usuario>> GetAll(CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<Usuario>().ToListAsync(cancellationToken);
+        }
+
+        public async Task<Usuario?> Get(int id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Usuario>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        }
+
+        public async Task<Usuario?> GetByToken(string nome, string senha, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Set<Usuario>().FirstOrDefaultAsync(x => x.Nome == nome && x.Senha == senha, cancellationToken);
         }
     }
 }

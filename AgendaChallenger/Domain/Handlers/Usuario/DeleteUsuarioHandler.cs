@@ -10,36 +10,32 @@ namespace AgendaChallenger.Domain.Handlers.Usuario
     public class DeleteUsuarioHandler : IRequestHandler<DeleteUsuarioRequest, DeleteUsuarioResponse>
     {
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly ISender _sender;
-
-        public DeleteUsuarioHandler(IUsuarioRepository usuarioRepository, IUnitOfWork unitOfWork, IMapper mapper, ISender sender)
+        public DeleteUsuarioHandler(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
-            _sender = sender;
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
         public Task<DeleteUsuarioResponse> Handle(DeleteUsuarioRequest request, CancellationToken cancellationToken)
         {
-            var result = new DeleteUsuarioResponse();
-            // var usuario = await _usuarioRepository.GetByIdAsync(request.Id, cancellationToken);
-            if (usuario == null)
+            DeleteUsuarioResponse result = new DeleteUsuarioResponse();
+             var usuario = _usuarioRepository.Get(request.Id, cancellationToken).Result;
+
+            if(usuario != null)
             {
-                result.Success = false;
+                if(_usuarioRepository.Delete(usuario).Result > 0)
+                {
+                    result.mensagem = "Removido com sucesso.";
+                }
+                else
+                {
+                    result.mensagem = "Falha ao remover Usuário.";
+                }
             }
             else
             {
-                _usuarioRepository.Delete(usuario);
-                int Ok = _unitOfWork.SaveChangesAsync(cancellationToken).Result;
-                if (Ok > 0)
-                {
-                    result.Success = true;
-                }
+                result.mensagem = "Usuário inexistente.";
             }
-
+                        
             return Task.FromResult(result);
         }
     }
