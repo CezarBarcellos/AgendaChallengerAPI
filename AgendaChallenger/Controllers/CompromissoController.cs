@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaChallenger.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("")]
     public class CompromissoController : Controller
@@ -21,7 +21,7 @@ namespace AgendaChallenger.Controllers
             return mediator.Send(command);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("ObterTodosCompromissos")]
         public Task<GetAllCompromissoResponse> GetAll([FromServices] IMediator mediator, [FromBody] GetAllCompromissoRequest command)
         {

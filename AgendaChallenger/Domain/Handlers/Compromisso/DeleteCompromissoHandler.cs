@@ -33,7 +33,7 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
             }
             else
             {
-                result.mensagem = "Usuário inexistente.";
+                result.mensagem = "Compromisso inexistente.";
             }
 
             return Task.FromResult(result);

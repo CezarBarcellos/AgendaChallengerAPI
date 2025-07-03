@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaChallenger.Controllers
 {
-        [ApiController]
-        [Route("")]
-        public class AuthorizationController : Controller
+    [ApiController]
+    [Route("")]
+    public class AuthorizationController : Controller
+    {
+        [HttpPost]
+        [Route("Login")]
+        public Task<CreateTokenResponse> GetToken([FromServices] IMediator mediator, [FromBody] CreateTokenRequest command)
         {
-            [HttpPost]
-            [Route("Login")]
-            public Task<CreateTokenResponse> GetToken([FromServices] IMediator mediator, [FromBody] CreateTokenRequest command)
-            {
-                return mediator.Send(command);
-            }
+            return mediator.Send(command);
         }
-    
+    }
 }
