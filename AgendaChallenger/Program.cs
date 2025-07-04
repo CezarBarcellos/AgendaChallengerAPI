@@ -12,6 +12,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using AgendaChallenger.Authorization;
 using AgendaChallenger.Domain.Interfaces;
+using GoogleCalendar.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,22 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICompromissoRepository, CompromissoRepository>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+//builder.Services.Configure<GoogleCalendarConfig>(builder.Configuration.GetSection("GoogleCalendar"));
+
+//builder.Services.AddSingleton(sp => sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<GoogleCalendarConfig>>().Value);
+
+//builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+var calendarSection = builder.Configuration.GetSection("GoogleCalendar");
+var calendarConfig = calendarSection.Get<GoogleCalendarConfig>();
+
+calendarConfig.CredentialsPath = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, calendarConfig.CredentialsPath.Replace('/', Path.DirectorySeparatorChar)));
+calendarConfig.TokenPath = Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, calendarConfig.TokenPath.Replace('/', Path.DirectorySeparatorChar)));
+
+// Injeta o objeto já resolvido
+builder.Services.AddSingleton(calendarConfig);
+
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

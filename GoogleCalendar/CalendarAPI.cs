@@ -6,6 +6,7 @@
     using Google.Apis.Calendar.v3.Data;
     using Google.Apis.Services;
     using Google.Apis.Util.Store;
+    using GoogleCalendar.Config;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -20,15 +21,17 @@
 
         private static readonly string ApplicationName = "Minha App Google Calendar";
         private readonly CalendarService service;
+        private readonly GoogleCalendarConfig _config;
 
-        private CalendarAPI(CalendarService service)
+        private CalendarAPI(CalendarService service, GoogleCalendarConfig config)
         {
             this.service = service;
+            _config = config;
         }
 
-        public static async Task<CalendarAPI> CriarInstanciaAsync()
+        public static async Task<CalendarAPI> CriarInstanciaAsync(GoogleCalendarConfig config)
         {
-            var credential = await ObterCredenciaisAsync();
+            var credential = await ObterCredenciaisAsync(config);
 
             var service = new CalendarService(new BaseClientService.Initializer()
             {
@@ -36,13 +39,18 @@
                 ApplicationName = ApplicationName,
             });
 
-            return new CalendarAPI(service);
+            return new CalendarAPI(service, config);
         }
 
-        private static async Task<UserCredential> ObterCredenciaisAsync()
+
+
+        private static async Task<UserCredential> ObterCredenciaisAsync(GoogleCalendarConfig config)
         {
-            using var stream = new FileStream("C:\\Users\\Cezar\\source\\repos\\AgendaChallengerAPI\\GoogleCalendar\\credentials.json", FileMode.Open, FileAccess.Read);
-            string credPath = "token.json";
+            if (!File.Exists(config.CredentialsPath))
+                throw new FileNotFoundException("Arquivo de credenciais não encontrado.", config.CredentialsPath);
+
+            using var stream = new FileStream(config.CredentialsPath, FileMode.Open, FileAccess.Read);
+            string credPath = config.TokenPath ?? "token.json";
 
             return await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 GoogleClientSecrets.FromStream(stream).Secrets,
@@ -52,6 +60,8 @@
                 new FileDataStore(credPath, true)
             );
         }
+
+
 
         public async Task<IList<Event>> ListarEventosAsync(int maxResultados = 50)
         {
@@ -71,7 +81,7 @@
                 return new List<Event>();
             }
 
-            // Impressão no console para depuração
+            // para depuração
             foreach (var evento in events.Items)
             {
                 var inicio = evento.Start.DateTime ?? DateTime.Parse(evento.Start.Date);
@@ -144,40 +154,47 @@
             {
                 var evento = await service.Events.Get("primary", eventId).ExecuteAsync();
 
-                // Garantir que Start e End existam
+                
                 if (evento.Start == null) evento.Start = new EventDateTime();
                 if (evento.End == null) evento.End = new EventDateTime();
 
-                // Validar datas
-                if (compromisso.DataInicio == DateTime.MinValue || compromisso.DataFim == DateTime.MinValue)
-                    throw new ArgumentException("Datas inválidas.");
+                
+                if (!string.IsNullOrWhiteSpace(compromisso.Titulo))
+                    evento.Summary = compromisso.Titulo;
 
-                if (compromisso.DataFim <= compromisso.DataInicio)
-                    throw new ArgumentException("DataFim deve ser maior que DataInicio.");
-
-                evento.Summary = compromisso.Titulo;
-                evento.Description = compromisso.Descricao;
-                evento.Start.DateTime = compromisso.DataInicio;
-                evento.End.DateTime = compromisso.DataFim;
-
-                evento.Status = compromisso.Status switch
+                
+                if (!string.IsNullOrWhiteSpace(compromisso.Descricao))
+                    evento.Description = compromisso.Descricao;
+                
+                if (compromisso.DataInicio != DateTime.MinValue && compromisso.DataFim != DateTime.MinValue && compromisso.DataFim > compromisso.DataInicio)
                 {
-                    0 => "cancelled",
-                    1 => "confirmed",
-                    2 => "tentative",
-                    _ => "confirmed"
-                };
+                    evento.Start.DateTime = compromisso.DataInicio;
+                    evento.End.DateTime = compromisso.DataFim;
+                }
+                
+                if (compromisso.Status == 0 || compromisso.Status == 1 || compromisso.Status == 2)
+                {
+                    evento.Status = compromisso.Status switch
+                    {
+                        0 => "cancelled",
+                        1 => "confirmed",
+                        2 => "tentative",
+                        _ => evento.Status
+                    };
+                }
 
                 var updateRequest = service.Events.Update(evento, "primary", eventId);
                 var updatedEvent = await updateRequest.ExecuteAsync();
+
                 Console.WriteLine("Evento atualizado: " + updatedEvent.HtmlLink);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Evento não atualizado: " + ex.Message);
-                throw; // Opcional: relança para tratamento externo
+                throw;
             }
         }
+
 
         public async Task ExcluirEventoAsync(string eventId)
         {

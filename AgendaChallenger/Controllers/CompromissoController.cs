@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaChallenger.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("")]
     public class CompromissoController : Controller
