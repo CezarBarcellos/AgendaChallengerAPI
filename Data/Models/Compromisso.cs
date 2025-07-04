@@ -6,7 +6,8 @@ namespace Data.Models
 {
     [Table("Compromisso")]
     public class Compromisso : Entity
-    {        
+    {
+        public required string Id { get; set; }
         public required string Titulo { get; set; }
         public required string Descricao { get; set; }
         public required DateTime DataInicio { get; set; }
@@ -14,9 +15,12 @@ namespace Data.Models
         public string? Localizacao { get; set; }
         public required int Status { get; set; }
 
+        public Compromisso() { }
+
         [SetsRequiredMembers]
-        public Compromisso(string titulo, string descricao, DateTime dataInicio, DateTime dataFim, string localizacao, int status)
+        public Compromisso(string id, string titulo, string descricao, DateTime dataInicio, DateTime dataFim, string localizacao, int status)
         {
+            Id = id;
             Titulo = titulo;
             Descricao = descricao;
             DataInicio = dataInicio;
@@ -24,5 +28,5 @@ namespace Data.Models
             Localizacao = localizacao;
             Status = status;
         }
-    }  
+    }
 }

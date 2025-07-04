@@ -6,7 +6,7 @@ namespace AgendaChallenger.Domain.Commands.Requests.Compromisso
 {
     public class UpdateCompromissoRequest : IRequest<UpdateCompromissoResponse>
     {
-        public required int Id { get; set; }
+        public required string Id { get; set; }
         public string? Titulo { get; set; }
         public string? Descricao { get; set; }
         public DateTime? DataInicio { get; set; }

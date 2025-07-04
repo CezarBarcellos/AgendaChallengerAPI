@@ -18,7 +18,7 @@ namespace Data.Repositories
             return await _dbContext.Set<Compromisso>().ToListAsync(cancellationToken);
         }
 
-        public async Task<Compromisso?> Get(int id, CancellationToken cancellationToken = default)
+        public async Task<Compromisso?> Get(string id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Set<Compromisso>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }

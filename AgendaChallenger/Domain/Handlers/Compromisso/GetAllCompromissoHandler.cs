@@ -3,6 +3,7 @@ using AgendaChallenger.Domain.Commands.Responses.Compromisso;
 using AgendaChallenger.Domain.Commands.Responses.Usuario;
 using Data.Interfaces;
 using Data.Repositories;
+using GoogleCalendar;
 using MediatR;
 
 namespace AgendaChallenger.Domain.Handlers.Compromisso
@@ -15,10 +16,13 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
         {
             _compromissoRepository = compromissoRepository;
         }
-        public Task<GetAllCompromissoResponse> Handle(GetAllCompromissoRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllCompromissoResponse> Handle(GetAllCompromissoRequest request, CancellationToken cancellationToken)
         {
             GetAllCompromissoResponse result = new GetAllCompromissoResponse();
-            var lstCompromisso = _compromissoRepository.GetAll(cancellationToken).Result;
+
+            var calendarApi = await CalendarAPI.CriarInstanciaAsync();
+            var lstEvents = await calendarApi.ListarEventosAsync();
+            var lstCompromisso = Utils.Utils.LstEventToLstCompromisso(lstEvents);
 
             if (lstCompromisso != null && lstCompromisso.Count > 0)
             {
@@ -28,7 +32,7 @@ namespace AgendaChallenger.Domain.Handlers.Compromisso
                 };
             }
 
-            return Task.FromResult(result);
+            return Task.FromResult(result).Result;
         }
     }
 }

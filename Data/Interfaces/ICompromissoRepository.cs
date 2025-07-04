@@ -11,6 +11,6 @@ namespace Data.Interfaces
         Task<int> Delete(Compromisso compromisso);
 
         Task<List<Compromisso>> GetAll(CancellationToken cancellationToken = default);
-        Task<Compromisso?> Get(int id, CancellationToken cancellationToken = default);
+        Task<Compromisso?> Get(string id, CancellationToken cancellationToken = default);
     }
 }

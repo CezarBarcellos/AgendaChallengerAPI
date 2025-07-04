@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Data.Models;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace AgendaChallenger.Domain.Utils
@@ -19,6 +20,32 @@ namespace AgendaChallenger.Domain.Utils
                 sb.Append(hash[i].ToString("X2"));
             }
             return sb.ToString();
+        }
+
+        public static List<Compromisso> LstEventToLstCompromisso(IList<Google.Apis.Calendar.v3.Data.Event> eventos)
+        {
+            var compromissos = new List<Compromisso>();
+
+            foreach (var evento in eventos)
+            {
+                // Garante que o evento tenha Start e End válidos
+                if (evento.Start?.DateTime == null || evento.End?.DateTime == null)
+                    continue;
+
+                var compromisso = new Compromisso(
+                    id: evento.Id,
+                    titulo: evento.Summary ?? "(Sem título)",
+                    descricao: evento.Description ?? string.Empty,
+                    dataInicio: evento.Start.DateTime.Value,
+                    dataFim: evento.End.DateTime.Value,
+                    localizacao: evento.Location,
+                    status: (int)(evento.Status == "cancelled" ? 0 : 1) // 0 = cancelado, 1 = ativo
+                );
+
+                compromissos.Add(compromisso);
+            }
+
+            return compromissos;
         }
     }
 }

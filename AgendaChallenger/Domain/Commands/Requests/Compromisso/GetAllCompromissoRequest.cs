@@ -6,6 +6,6 @@ namespace AgendaChallenger.Domain.Commands.Requests.Compromisso
     public class GetAllCompromissoRequest : IRequest<GetAllCompromissoResponse>
     {
         public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }     
+        public DateTime DataFim { get; set; }
     }
 }

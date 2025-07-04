@@ -1,4 +1,4 @@
-namespace Data
+namespace GoogleCalendar
 {
     public class Worker : BackgroundService
     {

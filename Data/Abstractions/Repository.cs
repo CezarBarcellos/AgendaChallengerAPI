@@ -21,25 +21,48 @@ namespace Data.Abstractions
 
         public virtual async Task<T> Add(T entity)
         {
-            ArgumentNullException.ThrowIfNull(entity);
-            DbContext.Add(entity);
-            await DbContext.SaveChangesAsync();
+            try
+            {
+                ArgumentNullException.ThrowIfNull(entity);
+                DbContext.Add(entity);
+                await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return entity;
         }
 
         public virtual async Task<T> Update(T entity)
         {
-            ArgumentNullException.ThrowIfNull(entity);
-            DbContext.Update(entity);
-            await DbContext.SaveChangesAsync();
+            try
+            {
+                ArgumentNullException.ThrowIfNull(entity);
+                DbContext.Update(entity);
+                await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return entity;
         }
 
         public virtual async Task<int> Delete(T entity)
         {
-            ArgumentNullException.ThrowIfNull(entity);
-            DbContext.Remove(entity);
-            int result = await DbContext.SaveChangesAsync();
+            int result = 0;
+            try
+            {
+                ArgumentNullException.ThrowIfNull(entity);
+                DbContext.Remove(entity);
+                result = await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             return result;
         }
     }
