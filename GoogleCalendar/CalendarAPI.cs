@@ -195,6 +195,35 @@
             }
         }
 
+        public async Task<IList<Event>> ListarFeriadosNacionaisAsync(int ano)
+        {
+            string calendarioFeriadosId = "pt.brazilian#holiday@group.v.calendar.google.com";
+
+            var request = service.Events.List(calendarioFeriadosId);
+            request.TimeMin = new DateTime(ano, 1, 1);
+            request.TimeMax = new DateTime(ano, 12, 31);
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            var events = await request.ExecuteAsync();
+
+            if (events.Items == null || events.Items.Count == 0)
+            {
+                Console.WriteLine("Nenhum feriado encontrado.");
+                return new List<Event>();
+            }
+
+            // Para depuração
+            foreach (var evento in events.Items)
+            {
+                string data = evento.Start.Date ?? evento.Start.DateTime?.ToString();
+                Console.WriteLine($"{data}: {evento.Summary}");
+            }
+
+            return events.Items;
+        }
+
 
         public async Task ExcluirEventoAsync(string eventId)
         {

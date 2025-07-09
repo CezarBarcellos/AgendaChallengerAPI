@@ -29,8 +29,15 @@ namespace AgendaChallenger.Domain.Utils
             foreach (var evento in eventos)
             {
                 // Garante que o evento tenha Start e End válidos
-                if (evento.Start?.DateTime == null || evento.End?.DateTime == null)
+                if (!evento.Description.Contains("Feriado") && !evento.Description.Contains("Data comemorativa") && (evento.Start?.DateTime == null || evento.End?.DateTime == null))
                     continue;
+
+                if(evento.Description.Contains("Feriado") || evento.Description.Contains("Data comemorativa"))
+                {
+                    evento.Start.DateTime = new DateTime();
+                    evento.End.DateTime = new DateTime();
+                    evento.Location = string.Empty;
+                }
 
                 var compromisso = new Compromisso(
                     id: evento.Id,
